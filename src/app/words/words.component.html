@@ -1,0 +1,26 @@
+<button *ngIf="!isShow" (click)="isShow = !isShow">Thêm từ mới</button>
+<!-- Form để thêm 1 từ mới -->
+<div *ngIf="isShow">
+  <input placeholder="English" [(ngModel)]="en"><br />
+  <input placeholder="Tiếng Việt" [(ngModel)]="vn"><br />
+  <button (click)="addWord()">Thêm</button>
+</div>
+
+<!-- Ô hiện những tùy chọn hiển thị -->
+<select [(ngModel)]="filterStatus">
+  <option value="tat_ca">Tất cả</option>
+  <option value="da_nho">Đã nhớ</option>
+  <option value="chua_nho">Chưa nhớ</option>
+</select>
+
+<!-- Hiển thị danh sách các từ -->
+<div *ngFor="let word of arWords" class="word">
+  <div *ngIf="getShowStatus(word.memorized)">
+    <h4 [ngStyle]="{color: word.memorized? 'green': 'red'}">
+      {{ word.en }}
+    </h4>
+    <p>{{ word.vn }}</p>
+    <button (click)="word.memorized = !word.memorized">{{ word.memorized? "Chưa thuộc": "Đã thuộc"}}</button>
+    <button (click)="deleteWord(word.id)">Xóa</button>
+  </div>
+</div>

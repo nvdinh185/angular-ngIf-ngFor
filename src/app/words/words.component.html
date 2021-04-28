@@ -16,17 +16,17 @@
 <!-- Hiển thị danh sách các từ -->
 <div *ngFor="let word of arWords">
   <div *ngIf="getShowStatus(word.memorized)" class="word">
-    <div *ngIf="!word.onEdit">
+    <div *ngIf="!word.onEdit; else elseBlock">
       <h4 [ngStyle]="{color: word.memorized? 'green': 'red'}">
         {{ word.en }}
       </h4>
       <p>{{ word.vn }}</p>
     </div>
-    <div *ngIf="word.onEdit">
+    <ng-template #elseBlock>
       <input class="input" placeholder="English" [(ngModel)]="en"><br />
       <input class="input" placeholder="Tiếng Việt" [(ngModel)]="vn"><br />
       <input type="submit" value="Sửa" (click)="editWord(word.id)" />
-    </div>
+    </ng-template>
     <button (click)="word.memorized = !word.memorized" *ngIf="!word.onEdit">
       {{ word.memorized? "Chưa thuộc": "Đã thuộc"}}
     </button>
